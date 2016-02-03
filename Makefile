@@ -1,5 +1,5 @@
 PKG_NAME := requestsexceptions
-URL := https://pypi.python.org/packages/source/r/requestsexceptions/requestsexceptions-1.1.1.tar.gz
+URL := http://tarballs.openstack.org/requestsexceptions/requestsexceptions-1.1.2.tar.gz
 ARCHIVES :=
 
 include ../common/Makefile.common
