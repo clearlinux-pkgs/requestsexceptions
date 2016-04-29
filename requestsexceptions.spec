@@ -4,7 +4,7 @@
 #
 Name     : requestsexceptions
 Version  : 1.1.3
-Release  : 3
+Release  : 4
 URL      : http://tarballs.openstack.org/requestsexceptions/requestsexceptions-1.1.3.tar.gz
 Source0  : http://tarballs.openstack.org/requestsexceptions/requestsexceptions-1.1.3.tar.gz
 Summary  : Import exceptions from potentially bundled packages in requests.
