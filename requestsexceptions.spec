@@ -4,27 +4,18 @@
 #
 Name     : requestsexceptions
 Version  : 1.1.3
-Release  : 7
+Release  : 8
 URL      : http://tarballs.openstack.org/requestsexceptions/requestsexceptions-1.1.3.tar.gz
 Source0  : http://tarballs.openstack.org/requestsexceptions/requestsexceptions-1.1.3.tar.gz
 Summary  : Import exceptions from potentially bundled packages in requests.
 Group    : Development/Tools
 License  : Apache-2.0
 Requires: requestsexceptions-python
-BuildRequires : flake8-python
-BuildRequires : mccabe-python
 BuildRequires : pbr
-BuildRequires : pep8
 BuildRequires : pip
-BuildRequires : pluggy
-BuildRequires : py-python
-BuildRequires : pyflakes-python
-BuildRequires : pytest
 BuildRequires : python-dev
 BuildRequires : python3-dev
 BuildRequires : setuptools
-BuildRequires : tox
-BuildRequires : virtualenv
 
 %description
 requestsexceptions
@@ -48,14 +39,10 @@ python components for the requestsexceptions package.
 %setup -q -n requestsexceptions-1.1.3
 
 %build
+export LANG=C
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
-%check
-export http_proxy=http://127.0.0.1:9/
-export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost,127.0.0.1,0.0.0.0
-PYTHONPATH=%{buildroot}/usr/lib/python2.7/site-packages python2 setup.py test
 %install
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot}
