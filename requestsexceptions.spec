@@ -6,7 +6,7 @@
 #
 Name     : requestsexceptions
 Version  : 1.2.0
-Release  : 11
+Release  : 12
 URL      : http://tarballs.openstack.org/requestsexceptions/requestsexceptions-1.2.0.tar.gz
 Source0  : http://tarballs.openstack.org/requestsexceptions/requestsexceptions-1.2.0.tar.gz
 Source99 : http://tarballs.openstack.org/requestsexceptions/requestsexceptions-1.2.0.tar.gz.asc
