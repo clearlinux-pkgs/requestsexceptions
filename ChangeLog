@@ -1,6 +1,13 @@
 CHANGES
 =======
 
+1.4.0
+-----
+
+* Updated from global requirements
+* Remove runtime depend on pbr
+* Update tox for OpenStack
+
 1.2.0
 -----
 
