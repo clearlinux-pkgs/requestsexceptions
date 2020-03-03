@@ -6,31 +6,28 @@
 #
 Name     : requestsexceptions
 Version  : 1.4.0
-Release  : 18
+Release  : 19
 URL      : http://tarballs.openstack.org/requestsexceptions/requestsexceptions-1.4.0.tar.gz
 Source0  : http://tarballs.openstack.org/requestsexceptions/requestsexceptions-1.4.0.tar.gz
-Source99 : http://tarballs.openstack.org/requestsexceptions/requestsexceptions-1.4.0.tar.gz.asc
+Source1  : http://tarballs.openstack.org/requestsexceptions/requestsexceptions-1.4.0.tar.gz.asc
 Summary  : Import exceptions from potentially bundled packages in requests.
 Group    : Development/Tools
 License  : Apache-2.0
-Requires: requestsexceptions-python3
-Requires: requestsexceptions-license
-Requires: requestsexceptions-python
+Requires: requestsexceptions-license = %{version}-%{release}
+Requires: requestsexceptions-python = %{version}-%{release}
+Requires: requestsexceptions-python3 = %{version}-%{release}
 BuildRequires : buildreq-distutils3
 BuildRequires : pbr
-BuildRequires : pip
-BuildRequires : python3-dev
-BuildRequires : setuptools
 
 %description
+requestsexceptions
 ==================
-        
-        The python requests library bundles the urllib3 library, however, some
-        software distributions modify requests to remove the bundled library.
-        This makes some operations, such as supressing the "insecure platform
-        warning" messages that urllib emits difficult.  This is a simple
-        library to find the correct path to exceptions in the requests library
-        regardless of whether they are bundled.
+The python requests library bundles the urllib3 library, however, some
+software distributions modify requests to remove the bundled library.
+This makes some operations, such as supressing the "insecure platform
+warning" messages that urllib emits difficult.  This is a simple
+library to find the correct path to exceptions in the requests library
+regardless of whether they are bundled.
 
 %package license
 Summary: license components for the requestsexceptions package.
@@ -43,7 +40,7 @@ license components for the requestsexceptions package.
 %package python
 Summary: python components for the requestsexceptions package.
 Group: Default
-Requires: requestsexceptions-python3
+Requires: requestsexceptions-python3 = %{version}-%{release}
 
 %description python
 python components for the requestsexceptions package.
@@ -53,6 +50,7 @@ python components for the requestsexceptions package.
 Summary: python3 components for the requestsexceptions package.
 Group: Default
 Requires: python3-core
+Provides: pypi(requestsexceptions)
 
 %description python3
 python3 components for the requestsexceptions package.
@@ -60,20 +58,29 @@ python3 components for the requestsexceptions package.
 
 %prep
 %setup -q -n requestsexceptions-1.4.0
+cd %{_builddir}/requestsexceptions-1.4.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1532270956
-python3 setup.py build -b py3
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1583219287
+# -Werror is for werrorists
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
+export MAKEFLAGS=%{?_smp_mflags}
+python3 setup.py build
 
 %install
+export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/requestsexceptions
-cp LICENSE %{buildroot}/usr/share/doc/requestsexceptions/LICENSE
-python3 -tt setup.py build -b py3 install --root=%{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/requestsexceptions
+cp %{_builddir}/requestsexceptions-1.4.0/LICENSE %{buildroot}/usr/share/package-licenses/requestsexceptions/47b573e3824cd5e02a1a3ae99e2735b49e0256e4
+python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -82,8 +89,8 @@ echo ----[ mark ]----
 %defattr(-,root,root,-)
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/requestsexceptions/LICENSE
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/requestsexceptions/47b573e3824cd5e02a1a3ae99e2735b49e0256e4
 
 %files python
 %defattr(-,root,root,-)
